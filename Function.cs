@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-internal class Function
+public class Function
 {
     public static int Recursion(int n)
     {
@@ -15,18 +15,27 @@ internal class Function
     {
         if (n <= 1) return 1;
 
-        var list = Divided(new List<int> {n, n, n});
-        int sum = list.Sum();
-        if (sum >= 6) sum += 3;
-        int listSum = sum;
-        while (listSum > 3)
-        {
-            list = Divided(list);
-            listSum = list.Sum();
-            sum += listSum;
-        } 
+        int sum = n;
 
-        return sum + n;
+        var list = DividedList(n);
+        sum += list.Sum();
+        for (int i = 0; i < list.Count; i++)
+        {
+            int number = list[i];
+            while (number > 1)
+            {
+                var newList = DividedList(number);
+                sum += newList.Sum();
+                number = newList[i];
+            }
+        }
+
+        return sum;
+    }
+
+    private static List<int> DividedList(int x)
+    {
+        return Divided(new List<int>(new List<int> {x, x, x}));
     }
 
     private static int MakeOne(int x)
@@ -36,8 +45,8 @@ internal class Function
 
     private static List<int> Divided(List<int> list)
     {
-        if(list.Count != 3) throw new Exception("Invalid List!");
+        if (list.Count != 3) throw new Exception("Invalid List!");
 
-        return new List<int> { list[0] / 2, list[1] / 3, list[2] / 6 }.Select(MakeOne).ToList();
+        return new List<int> {list[0] / 2, list[1] / 3, list[2] / 6}.Select(MakeOne).ToList();
     }
 }
