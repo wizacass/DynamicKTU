@@ -2,16 +2,16 @@
 
 namespace Formule
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             Console.WriteLine("Recursion vs Dynamic");
-            for (int i = 0; i < 6; i++)
+            for (int i = 1; i <= 10; i++)
             {
-                var rec = Function.Recursion(i + 1);
-                var dyn = Function.Loop(i + 1);
-                Console.WriteLine($"{rec,4} {(rec == dyn ? "==" : "!=")} {dyn}");
+                int rec = Function.Recursion(i);
+                int dyn = Function.Dynamic(i);
+                Console.WriteLine($"{i, 3}. {rec,4} {(rec == dyn ? "==" : "!=")} {dyn}");
             }
         }
     }
