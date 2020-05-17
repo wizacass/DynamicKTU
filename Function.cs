@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 public class Function
 {
@@ -24,6 +25,24 @@ public class Function
         }
 
         return solutions.Last();
+    }
+
+    public static int Parallel(int n)
+    {
+        if (n <= 1) return 1;
+
+        var tasks = new List<Task<int>>
+        {
+            new Task<int>(() => Parallel(n / 2)),
+            new Task<int>(() => Parallel(n / 3)),
+            new Task<int>(() => Parallel(n / 6))
+        };
+
+        tasks.ForEach(task => task.Start());
+
+        Task.WaitAll(tasks.ToArray());
+
+        return tasks.Sum(task => task.Result) + n;
     }
 
     private static Tuple<int, int, int> Dividers(int n)
