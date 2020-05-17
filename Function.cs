@@ -15,38 +15,28 @@ public class Function
     {
         if (n <= 1) return 1;
 
-        int sum = n;
-
-        var list = DividedList(n);
-        sum += list.Sum();
-        for (int i = 0; i < list.Count; i++)
+        var solutions = new List<int> {1, 1};
+        for (int i = 2; i <= n; i++)
         {
-            int number = list[i];
-            while (number > 1)
-            {
-                var newList = DividedList(number);
-                sum += newList.Sum();
-                number = newList[i];
-            }
+            (int d6, int d3, int d2) = Dividers(i);
+            int solution = solutions[d6] + solutions[d3] + solutions[d2] + i;
+            solutions.Add(solution);
         }
 
-        return sum;
+        return solutions.Last();
     }
 
-    private static List<int> DividedList(int x)
+    private static Tuple<int, int, int> Dividers(int n)
     {
-        return Divided(new List<int>(new List<int> {x, x, x}));
+        int n1 = MakeOne(n / 6);
+        int n2 = MakeOne(n / 3);
+        int n3 = MakeOne(n / 2);
+
+        return new Tuple<int, int, int>(n1, n2, n3);
     }
 
     private static int MakeOne(int x)
     {
         return x <= 1 ? 1 : x;
-    }
-
-    private static List<int> Divided(List<int> list)
-    {
-        if (list.Count != 3) throw new Exception("Invalid List!");
-
-        return new List<int> {list[0] / 2, list[1] / 3, list[2] / 6}.Select(MakeOne).ToList();
     }
 }
