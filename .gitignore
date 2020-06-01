@@ -6,3 +6,4 @@ obj/
 *.sln*
 .DS_Store
 Logs/
+Python/graphs

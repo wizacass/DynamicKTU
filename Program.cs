@@ -19,7 +19,6 @@ namespace Formule
 
         private static int CalculateEntries(int i)
         {
-            //return 10 * (int)Math.Pow(2, i);
             return (int)Math.Pow(2, i);
         }
 
