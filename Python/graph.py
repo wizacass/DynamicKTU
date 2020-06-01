@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import glob
+import os
 
 logsdir = "Logs/"
 graphsdir = "Python/graphs/"
@@ -42,6 +43,7 @@ def plot(datafile, figurecount, counts, data1, data2, data3):
     plt.savefig(path)
 
 
+os.makedirs(graphsdir)
 logfiles = glob.glob(f"{logsdir}/*.csv")
 for file in logfiles:
     print("Analyzing " + file)
