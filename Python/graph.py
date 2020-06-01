@@ -43,7 +43,10 @@ def plot(datafile, figurecount, counts, data1, data2, data3):
     plt.savefig(path)
 
 
-os.makedirs(graphsdir)
+try:
+    os.makedirs(graphsdir)
+except:
+    print("Graph directory already exists!")
 logfiles = glob.glob(f"{logsdir}/*.csv")
 for file in logfiles:
     print("Analyzing " + file)
